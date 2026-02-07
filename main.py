@@ -16,7 +16,7 @@ class RegisterRequest(BaseModel):
 
 class MatchRequest(BaseModel):
     rollno: str
-    top_k: int = 10
+    top_k: int = 10 # temporary Gives top_k most similar matches 
 
 # ------------------ APIs ------------------
 

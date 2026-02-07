@@ -1,7 +1,17 @@
 import numpy as np
 from embedder import embed_text
 from weights import QUESTION_WEIGHTS
-
+QUESTION_WEIGHTS = {"q1":1,
+                    "q2":1,
+                    "q3":1,
+                    "q4":1,
+                    "q5":1,
+                    "q6":1,
+                    "q7":1,
+                    "q8":1,
+                    "q9":1,
+                    "q10":1,
+                    }
 def create_weighted_vector(responses: dict) -> np.ndarray:
     final_vector = None
 
