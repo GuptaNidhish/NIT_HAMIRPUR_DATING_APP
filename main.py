@@ -12,7 +12,7 @@ threshold = 60
 
 class RegisterRequest(BaseModel):
     rollno: str
-    responses: Dict[str, str]
+    responses: Dict[str, str] 
 
 class MatchRequest(BaseModel):
     rollno: str
