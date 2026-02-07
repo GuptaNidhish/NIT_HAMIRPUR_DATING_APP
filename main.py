@@ -32,7 +32,7 @@ def register_user(data: RegisterRequest):
 
 @app.post("/matches")
 def find_matches(data: MatchRequest):
-    if data.rollno not in male_rollno_vectors or data.rollno not in female_rollno_vectors:
+    if data.rollno not in male_rollno_vectors and data.rollno not in female_rollno_vectors:
         raise HTTPException(status_code=404, detail="User not found")
     gender = user_genders[data.rollno]
     if(gender == 'male'):
