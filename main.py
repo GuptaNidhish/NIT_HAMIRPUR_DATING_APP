@@ -7,7 +7,7 @@ from vectorization import create_weighted_vector
 
 app = FastAPI(title="Dating App Matching API")
 user_genders = {}
-
+threshold = 60
 # ------------------ Schemas ------------------
 
 class RegisterRequest(BaseModel):
@@ -16,7 +16,7 @@ class RegisterRequest(BaseModel):
 
 class MatchRequest(BaseModel):
     rollno: str
-    top_k: int = 10 # temporary Gives top_k most similar matches 
+    top_k: int = 50 # temporary Gives top_k most similar matches 
 
 # ------------------ APIs ------------------
 
@@ -40,12 +40,17 @@ def find_matches(data: MatchRequest):
     elif(gender == 'female'):
         query_vector = female_rollno_vectors[data.rollno]
     results = search(query_vector, data.top_k + 1,gender)
-
+    filtered = [(uid, score) for uid, score in results if uid != data.rollno]
+    if not filtered:
+        return {"matches": []}
+    max_score = filtered[0][1]
+    matches = []
+    for uid, score in filtered:
+        percentage = (score / max_score) * 100
+        if percentage >= threshold:
+            matches.append({
+                "rollno": uid,
+                "similarity": round(percentage, 2)
+            })
     # remove self-match
-    matches = [
-        {"rollno": uid, "score": score}
-        for uid, score in results
-        if uid != data.rollno
-    ][:data.top_k]
-
     return {"matches": matches}
