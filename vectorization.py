@@ -1,6 +1,5 @@
 import numpy as np
 from embedder import embed_text
-from weights import QUESTION_WEIGHTS
 QUESTION_WEIGHTS = {"q1":1,
                     "q2":1,
                     "q3":1,
